@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | Renato Alves</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .icon {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2;
+            margin-right: 8px;
+            display: inline-block; /* Garante que o ícone fique na linha */
+            vertical-align: middle; /* Alinha o ícone verticalmente com o texto */
+        }
+        .flag-icon {
+            width: 32px;
+            height: 24px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            transition: opacity 0.3s, border-color 0.3s;
+        }
+        .flag-icon.inactive {
+            opacity: 0.5;
+        }
+        .flag-icon:hover {
+            opacity: 1;
+        }
+        .flag-icon.active {
+             border-color: #38bdf8; /* sky-400 */
+             box-shadow: 0 0 0 2px #38bdf8;
+        }
+        .project-card {
+            background-color: white;
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .project-card:hover {
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); /* shadow-xl */
+        }
+        .tech-tag {
+             display: inline-block;
+             font-size: 0.75rem; /* text-xs */
+             font-weight: 600; /* font-semibold */
+             padding: 0.25rem 0.75rem; /* px-3 py-1 */
+             border-radius: 9999px; /* rounded-full */
+             margin-right: 0.5rem; /* mr-2 */
+             margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .java-tag { background-color: #fecaca; color: #b91c1c; } /* red-100 / red-800 */
+        .php-tag { background-color: #dbeafe; color: #1e40af; } /* blue-100 / blue-800 */
+        .data-tag { background-color: #fef3c7; color: #b45309; } /* amber-100 / amber-700 */
+        .other-tag { background-color: #e5e7eb; color: #374151; } /* gray-200 / gray-700 */
+
+        .education-item {
+             border-left: 4px solid #38bdf8; /* sky-400 */
+             padding-left: 1rem;
+             margin-bottom: 1rem;
+        }
+        .education-item p {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Esconder no print */
+        @media print {
+            .no-print {
+                display: none;
+            }
+             body {
+                background-color: #FFFFFF !important;
+            }
+            .container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            aside {
+                background-color: #f3f4f6 !important; /* Um cinza claro para manter a estrutura */
+                color: #1f2937 !important; /* Texto mais escuro para contraste */
+            }
+            aside h1, aside h2, aside h3 { color: #111827 !important; }
+            aside a { color: #1f2937 !important; }
+            .text-sky-400 { color: #0369a1 !important; } /* Cor mais escura para impressão */
+            .bg-slate-700 { background-color: #d1d5db !important; } /* Cinza mais claro */
+            .text-slate-200, .text-slate-300, .text-slate-400 { color: #374151 !important; } /* Texto mais escuro */
+            .project-card, .education-item {
+                 box-shadow: none !important;
+                 border: 1px solid #e5e7eb;
+                 page-break-inside: avoid;
+            }
+             .education-item { border-left: 2px solid #ccc; }
+            .tech-tag {
+                border: 1px solid #ccc;
+                background-color: #fff !important;
+            }
+            .java-tag { color: #b91c1c !important; border-color: #fecaca; }
+            .php-tag { color: #1e40af !important; border-color: #dbeafe; }
+            .data-tag { color: #b45309 !important; border-color: #fef3c7; }
+            .other-tag { color: #374151 !important; border-color: #e5e7eb; }
+        }
+    </style>
+</head>
+<body class="bg-gray-200">
+
+    <div class="container mx-auto max-w-5xl my-12 bg-white shadow-2xl rounded-lg overflow-hidden flex flex-col md:flex-row min-h-[1123px]">
+
+        <!-- Barra Lateral Esquerda -->
+        <aside class="w-full md:w-1/3 bg-slate-800 text-white p-8">
+            <div class="flex flex-col h-full">
+                <header class="text-center mb-12">
+                     <h1 id="name_aside" class="text-4xl font-extrabold text-white leading-tight"></h1>
+                     <h2 id="title_aside" class="text-md font-medium text-sky-400 mt-2"></h2>
+                </header>
+
+                <div class="space-y-10">
+                    <section>
+                        <h3 id="contact-title" class="text-lg font-bold text-sky-400 uppercase tracking-wider mb-4"></h3>
+                        <div id="contact-info" class="space-y-3 text-sm text-slate-300">
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 id="core-skills-title" class="text-lg font-bold text-sky-400 uppercase tracking-wider mb-4"></h3>
+                        <div id="core-skills-list" class="flex flex-wrap gap-2">
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 id="certifications-title" class="text-lg font-bold text-sky-400 uppercase tracking-wider mb-4"></h3>
+                        <ul id="certifications-list" class="space-y-2 text-slate-300 text-sm list-disc list-inside">
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3 id="languages-title" class="text-lg font-bold text-sky-400 uppercase tracking-wider mb-4"></h3>
+                        <ul id="languages-list" class="space-y-2 text-slate-300 text-sm">
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="w-full md:w-2/3 p-8 relative">
+            <!-- Botão de Idioma com Bandeiras -->
+            <div id="lang-switcher" class="no-print absolute top-6 right-6 flex space-x-2">
+                 <svg id="flag-pt" class="flag-icon active" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#009B3A" d="M0 0h72v54H0z"/>
+                    <path fill="#FEDF00" d="M36 4l27.8 23L36 50 8.2 27 36 4z"/>
+                    <path fill="#002776" d="M36 38c7.18 0 13-5.82 13-13s-5.82-13-13-13-13 5.82-13 13 5.82 13 13 13z"/>
+                 </svg>
+                 <svg id="flag-en" class="flag-icon inactive" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#FFF" d="M0 0h72v54H0z"/>
+                    <path fill="#B22234" d="M0 0h72v4.15H0zM0 8.3h72v4.15H0zM0 16.6h72v4.15H0zM0 24.9h72v4.15H0zM0 33.2h72v4.15H0zM0 41.5h72v4.15H0zM0 49.8h72v4.15H0z"/>
+                    <path fill="#3C3B6E" d="M0 0h32.4v29H0z"/>
+                 </svg>
+            </div>
+
+            <section class="mb-10 mt-16 md:mt-0">
+                <h3 id="summary-title" class="text-2xl font-bold text-slate-800 border-b-2 border-slate-300 pb-2 mb-4"></h3>
+                <p id="summary-text" class="text-slate-600 text-sm leading-relaxed"></p>
+            </section>
+
+            <section id="projects-section" class="mb-10">
+                <h3 id="projects-title" class="text-2xl font-bold text-slate-800 border-b-2 border-slate-300 pb-2 mb-4"></h3>
+                 <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 </div>
+            </section>
+
+             <section id="education-section" class="mb-10">
+                <h3 id="education-title" class="text-2xl font-bold text-slate-800 border-b-2 border-slate-300 pb-2 mb-4"></h3>
+                <div id="education-list" class="space-y-6">
+                </div>
+            </section>
+
+            <section id="experience-section">
+                <h3 id="experience-title" class="text-2xl font-bold text-slate-800 border-b-2 border-slate-300 pb-2 mb-4"></h3>
+                <div id="experience-list" class="space-y-8">
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const cvData = {
+            pt: {
+                name: "Renato Alves",
+                title: "Desenvolvedor de Software | Java | PHP | Big Data | Node | TypeScript | MongoDB | Python | Selenium Web Driver",
+                contact: {
+                    email: "renatoguara2019@yahoo.com",
+                    linkedin: "linkedin.com/in/renatoalves-developer/",
+                    github: "https://github.com/renatoalves-dev",
+                    phone: "+55 61 98556-7354"
+                },
+                sections: {
+                    contact: "Contato",
+                    coreSkills: "Competências Técnicas",
+                    certifications: "Certificações",
+                    languages: "Idiomas",
+                    summary: "Resumo Profissional",
+                    projects: "Projetos em Destaque",
+                    experience: "Experiência Profissional",
+                    education: "Formação Acadêmica",
+                },
+                summaryText: "Profissional de TI com mais de 15 anos de sólida experiência em redes, suporte e infraestrutura, atualmente em transição de carreira focada em Desenvolvimento de Software. Com domínio profissional do idioma inglês, estou a aprofundar conhecimentos através de pós-graduações em Desenvolvimento Java/PHP e Big Data. Procuro ativamente uma oportunidade como Desenvolvedor para aplicar a minha base técnica, paixão por programação e novas competências na criação de soluções de software robustas, estando apto para colaborar em projetos internacionais.",
+                coreSkillsList: ["Java", "PHP", "Python (Dados)", "SQL (MySQL, PostgreSQL)", "HTML5", "CSS3", "Spring Boot (Estudo)", "Laravel (Estudo)", "OOP", "REST APIs", "PDO", "Big Data", "Análise de Dados", "BPM-CBOK"],
+                certificationsList: ["PHP com PDO", "Aprenda PHP do Zero", "Curso Analista de Sistemas Debian"],
+                languagesList: [
+                    { lang: "Português", level: "Nativo" },
+                    { lang: "Inglês", level: "Profissional / Fluente" },
+                    { lang: "Francês", level: "Elementar" }
+                ],
+                projectsList: [
+                    { title: "API REST de Gestão (Java)", description: "API RESTful para gestão de vendas, utilizando Java e Spring Boot. Foco em CRUD, segurança e acesso a banco de dados.", techs: ["Java", "Spring Boot", "SQL"], github: "https://github.com/renatoalves-dev/JAVA-WEB" },
+                    { title: "Sistema de Blog (PHP)", description: "Sistema de blog com painel administrativo, utilizando PHP puro com PDO e MySQL para gestão de posts e utilizadores.", techs: ["PHP", "PDO", "MySQL"], github: "https://github.com/renatoalves-dev/PHP-PDO_2025" },
+                    { title: "Testes Automatizados com Python, Selenium Web Driver", description: " Testes Automatizados com Python e Selenium", techs: ["Python", "Selenium", "Cypress"], github: "https://github.com/renatoalves-dev/testes-automatizados-2025" },
+                    { title: "Clínica Veterinária (Em Andamento)", description: "Aplicação Full-Stack para Clínica, combinando backend JavaScript () com Mongo DB, NODE JS React no Front End (em estudo).", techs: ["Full-Stack", "Java", "React"], github: "https://github.com/renatoalves-dev/clinica-veterinaria_2025" }
+                ],
+                experienceList: [
+                    {
+                        role: "Analista de Redes e Comunicação de Dados",
+                        company: "Stefanini Brasil (alocado na Caixa Econômica Federal)",
+                        period: "Agosto 2021 - Presente",
+                        description: "Responsável pelo suporte e gestão da infraestrutura de rede corporativa, assegurando a alta disponibilidade, performance e segurança dos serviços bancários essenciais."
+                    },
+                    {
+                        role: "Técnico de Suporte em TI",
+                        company: "Metacom Telecomunicações",
+                        period: "Abril 2018 - Junho 2019",
+                        description: "Prestação de suporte técnico a utilizadores (nível 1 e 2), diagnóstico e resolução de incidentes de hardware e software, e manutenção preventiva de sistemas."
+                    },
+                    {
+                        role: "Supervisor de Equipe e Desenvolvedor Java Web & PHP",
+                        company: "Telemont",
+                        period: "Fevereiro 2004 - Janeiro 2013",
+                        description: "Liderança de equipas técnicas em campo  e desenvolvimento de um sistema de controle de almoxarifado em Java Web com Primefaces e Hibernate/JPA."
+                    }
+                ],
+                educationList: [
+                     { degree: "MBA Executivo, Gestão de Processos (BPM-CBOK)", institution: "FACUVALE", period: "2024 - 2026 (Cursando)", finalProject: "Otimização de fluxos de trabalho em desenvolvimento de software utilizando BPMN." },
+                     { degree: "Pós-Graduação, Desenvolvimento com Java e PHP", institution: "FACUVALE", period: "2024 - 2026 (Cursando)", finalProject: "Desenvolvimento de uma aplicação web Full-Stack para gestão académica." },
+                     { degree: "Pós-Graduação, Big Data (Ciência de Dados)", institution: "FACUVALE", period: "2024 (Concluído)", finalProject: "Análise preditiva de churn de clientes utilizando modelos de Machine Learning." },
+                     { degree: "Tecnologia, Análise e Desenvolvimento de Sistemas", institution: "UniPROJEÇÃO", period: "2012 - 2015", finalProject: "Sistema de gestão para pequenas empresas com controlo de stock e vendas." }
+                ]
+            },
+            en: {
+                 name: "Renato Alves",
+                title: "Software Developer | Java | PHP | Big Data",
+                 contact: {
+                    email: "renatoguara2019@yahoo.com",
+                    linkedin: "linkedin.com/in/renatoalves-developer/",
+                    github: "https://github.com/renatoalves-dev",
+                    phone: "+55 61 98556-7354"
+                },
+                sections: {
+                    contact: "Contact",
+                    coreSkills: "Technical Skills",
+                    certifications: "Certifications",
+                    languages: "Languages",
+                    summary: "Professional Summary",
+                    projects: "Featured Projects",
+                    experience: "Professional Experience",
+                    education: "Education",
+                },
+                summaryText: "IT professional with over 15 years of solid experience in networks, support, and infrastructure, currently transitioning career focus to Software Development. Fully proficient in English, I am deepening my knowledge through postgraduate studies in Java/PHP Development and Big Data. Actively seeking a Developer opportunity to apply my robust technical foundation, passion for programming, and new skills in creating efficient and scalable software solutions, ready to collaborate on international projects.",
+                coreSkillsList: ["Java", "PHP", "Python (Data)", "SQL (MySQL, PostgreSQL)", "HTML5", "CSS3", "Spring Boot (Studying)", "Laravel (Studying)", "OOP", "REST APIs", "PDO", "Big Data", "Data Analysis", "BPM-CBOK", "MongoDB", "Node JS com TypeScript"],
+                certificationsList: ["PHP with PDO", "Learn PHP From Scratch", "Debian Systems Analyst Course"],
+                 languagesList: [
+                    { lang: "Portuguese", level: "Native" },
+                    { lang: "English", level: "Professional / Fluent" },
+                    { lang: "French", level: "Elementary" }
+                ],
+                projectsList: [
+                    { title: "Management REST API (Java)", description: "RESTful API for a sales management system using Java and the Spring Boot ecosystem. Focus on CRUD best practices, security, and database access.", techs: ["Java", "Spring Boot", "SQL"], github: "https://github.com/renatotaguatinha36" },
+                    { title: "Blog System (PHP)", description: "Development of a complete blog system with an admin panel, using plain PHP with PDO connection to a MySQL database for post and user management.", techs: ["PHP", "PDO", "MySQL"], github: "https://github.com/renatotaguatinha36" },
+                    { title: "Analysis Dashboard (Big Data)", description: "Big Data Postgraduate project focused on collecting, processing, and visualizing a large volume of sales data to identify consumption patterns.", techs: ["Python", "Pandas", "Data Viz"], github: "https://github.com/renatotaguatinha36" },
+                    { title: "Customer CRM (In Progress)", description: "Full-Stack web application for customer relationship management, combining a Java (Spring) backend with a React frontend (studying).", techs: ["Full-Stack", "Java", "React"], github: "https://github.com/renatotaguatinha36" }
+                ],
+                experienceList: [
+                    {
+                        role: "Network and Data Communications Analyst",
+                        company: "Stefanini Brasil (allocated at Caixa Econômica Federal)",
+                        period: "August 2021 - Present",
+                        description: "Responsible for supporting and managing the corporate network infrastructure, ensuring high availability, performance, and security of essential banking services."
+                    },
+                    {
+                        role: "IT Support Technician",
+                        company: "Metacom Telecomunicações",
+                        period: "April 2018 - June 2019",
+                        description: "Provided technical support to users (level 1 & 2), diagnosing and resolving hardware/software incidents, and performing preventive system maintenance."
+                    },
+                    {
+                        role: "Team Supervisor",
+                        company: "Telemont",
+                        period: "February 2004 - January 2013",
+                        description: "Led field technical teams for installation and maintenance of telecommunication services, managed schedules, and ensured quality standards."
+                    }
+                ],
+                educationList: [
+                    { degree: "Executive MBA, Process Management (BPM-CBOK)", institution: "FACUVALE", period: "2024 - 2026 (Ongoing)", finalProject: "Optimization of software development workflows using BPMN." },
+                    { degree: "Postgraduate, Development with Java and PHP", institution: "FACUVALE", period: "2024 - 2026 (Ongoing)", finalProject: "Development of a Full-Stack web application for academic management." },
+                    { degree: "Postgraduate, Big Data (Data Science)", institution: "FACUVALE", period: "2024 (Completed)", finalProject: "Predictive analysis of customer churn using Machine Learning models." },
+                    { degree: "Technologist, Systems Analysis and Development", institution: "UniPROJEÇÃO", period: "2012 - 2015", finalProject: "Management system for small businesses with inventory and sales control." }
+                ]
+            }
+        };
+
+        let currentLang = 'pt';
+        const flagPt = document.getElementById('flag-pt');
+        const flagEn = document.getElementById('flag-en');
+
+        const renderCV = (lang) => {
+            const data = cvData[lang];
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+
+            // Coluna Lateral
+            document.getElementById('name_aside').textContent = data.name;
+            document.getElementById('title_aside').textContent = data.title;
+            document.getElementById('contact-title').textContent = data.sections.contact;
+            document.getElementById('contact-info').innerHTML = `
+                <a href="mailto:${data.contact.email}" class="flex items-center hover:text-sky-400">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <span>${data.contact.email}</span>
+                </a>
+                 <a href="tel:${data.contact.phone.replace(/\D/g,'')}" class="flex items-center hover:text-sky-400">
+                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                     <span>${data.contact.phone}</span>
+                 </a>
+                <a href="https://${data.contact.linkedin}" target="_blank" class="flex items-center hover:text-sky-400">
+                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    <span>${data.contact.linkedin}</span>
+                </a>
+                <a href="https://${data.contact.github}" target="_blank" class="flex items-center hover:text-sky-400">
+                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    <span>${data.contact.github}</span>
+                </a>
+            `;
+            document.getElementById('core-skills-title').textContent = data.sections.coreSkills;
+            document.getElementById('core-skills-list').innerHTML = data.coreSkillsList.map(skill =>
+                `<span class="bg-slate-700 text-slate-200 text-xs font-semibold px-3 py-1 rounded-full">${skill}</span>`
+            ).join('');
+
+            document.getElementById('certifications-title').textContent = data.sections.certifications;
+            document.getElementById('certifications-list').innerHTML = data.certificationsList.map(cert => `<li>${cert}</li>`).join('');
+
+            document.getElementById('languages-title').textContent = data.sections.languages;
+            document.getElementById('languages-list').innerHTML = data.languagesList.map(item =>
+                `<li><strong>${item.lang}:</strong> <span class="text-slate-400">${item.level}</span></li>`
+            ).join('');
+
+            // Conteúdo Principal
+            document.getElementById('summary-title').textContent = data.sections.summary;
+            document.getElementById('projects-title').textContent = data.sections.projects;
+            document.getElementById('experience-title').textContent = data.sections.experience;
+            document.getElementById('education-title').textContent = data.sections.education;
+            document.getElementById('summary-text').textContent = data.summaryText;
+
+             document.getElementById('projects-list').innerHTML = data.projectsList.map(proj => {
+                 const techTags = proj.techs.map(tech => {
+                     let tagClass = 'other-tag';
+                     if (tech.toLowerCase().includes('java') || tech.toLowerCase().includes('spring')) tagClass = 'java-tag';
+                     else if (tech.toLowerCase().includes('php') || tech.toLowerCase().includes('laravel')) tagClass = 'php-tag';
+                     else if (tech.toLowerCase().includes('python') || tech.toLowerCase().includes('data') || tech.toLowerCase().includes('pandas')) tagClass = 'data-tag';
+                      else if (tech.toLowerCase().includes('react')) tagClass = 'php-tag'; // Reutilizando a cor azul para React
+                     return `<span class="tech-tag ${tagClass}">${tech}</span>`;
+                 }).join('');
+
+                 return `
+                    <div class="project-card">
+                        <h4 class="text-xl font-bold mb-2 text-slate-800">${proj.title}</h4>
+                        <p class="text-slate-600 text-sm mb-4">${proj.description}</p>
+                        <div>${techTags}</div>
+                        <div class="mt-4">
+                            <a href="${proj.github}" target="_blank" class="text-sm font-medium text-sky-600 hover:text-sky-800 transition-colors">Ver no GitHub &rarr;</a>
+                        </div>
+                    </div>
+                `;
+             }).join('');
+
+             document.getElementById('experience-list').innerHTML = data.experienceList.map(job => `
+                <div class="mb-6">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h4 class="text-lg font-bold text-slate-800">${job.role}</h4>
+                        <span class="text-xs font-medium text-slate-500">${job.period}</span>
+                    </div>
+                     <p class="text-md font-semibold text-sky-600 mb-2">${job.company}</p>
+                     <p class="text-slate-600 text-sm leading-relaxed">${job.description || ''}</p>
+                </div>
+            `).join('');
+
+
+             document.getElementById('education-list').innerHTML = data.educationList.map(edu => `
+                <div class="education-item">
+                    <h4 class="text-md font-bold text-slate-800">${edu.degree}</h4>
+                    <p class="text-sm font-semibold text-slate-700">${edu.institution}</p>
+                    <p class="text-xs text-slate-500">${edu.period}</p>
+                    ${edu.finalProject ? `<p class="text-sm text-slate-600 mt-1 italic">${lang === 'pt' ? 'Projeto Final:' : 'Final Project:'} ${edu.finalProject}</p>` : ''}
+                </div>
+            `).join('');
+
+
+            if (lang === 'pt') {
+                flagPt.classList.remove('inactive');
+                flagPt.classList.add('active');
+                flagEn.classList.remove('active');
+                flagEn.classList.add('inactive');
+            } else {
+                flagEn.classList.remove('inactive');
+                flagEn.classList.add('active');
+                flagPt.classList.remove('active');
+                flagPt.classList.add('inactive');
+            }
+        };
+
+        flagPt.addEventListener('click', () => {
+            if (currentLang !== 'pt') {
+                currentLang = 'pt';
+                renderCV(currentLang);
+            }
+        });
+
+        flagEn.addEventListener('click', () => {
+            if (currentLang !== 'en') {
+                currentLang = 'en';
+                renderCV(currentLang);
+            }
+        });
+
+        renderCV(currentLang);
+    </script>
+
+</body>
+</html>
